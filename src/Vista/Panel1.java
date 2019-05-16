@@ -1,4 +1,4 @@
-package vista;
+package Vista;
 
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ public class Panel1 extends JPanel {
 
   public Panel1(){
     ingresarText = new JLabel("Ingrese la cantidad de Mascotas");
-    cantidad = new JTextField();
+    cantidad = new JTextField(20);
     add(ingresarText);
     add(cantidad);
   }
