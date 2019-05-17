@@ -1,106 +1,88 @@
 package Controlador;
 
-import javax.swing.JOptionPane;
-
 import Modelo.*;
 import Vista.*;
 
-public class Controlador {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-	private VentanaPrincipal vista;
-	private Mascota registro[];
-	private int cantidadAnimales;
-	
-	public int tamañoarreglo() {
-		int tamañoarreglo=0;
-		String aux = JOptionPane.showInputDialog("Ingrese el tamaño de su registro: ");
-		return tamañoarreglo= Integer.parseInt(aux);
-		
-	}
+public class Controlador implements ActionListener {
 
-	public Controlador() {
-		vista = new VentanaPrincipal();
-//		registro = new Mascota[tamañoarreglo()];
-//		cantidadAnimales = 0;
-//		vista = new Vista();
-//		funcionar();
-//	}
-//
-//	public void funcionar() {
-//		int opcion = 0;
-//		do {
-//
-//			try {
-//				opcion = vista.menuPrincipal();
-//				switch (opcion) {
-//				case 1:
-//					ingresarAnimal();
-//					break;
-//
-//				case 2:
-//					buscarAnimal();
-//					break;
-//				case 3:
-//					directorioVeterinaria();
-//					break;
-//				case 4:
-//					salir();
-//					break;
-//				}
-//			} catch (NumberFormatException e) {
-//				JOptionPane.showMessageDialog(null, "Opcion incorrecta", "MENSAJE DE ERROR",
-//						JOptionPane.WARNING_MESSAGE);
-//			} catch (NullPointerException e) {
-//				JOptionPane.showMessageDialog(null, "No se encuentra la mascota", "MENSAJE DE ERROR",
-//						JOptionPane.WARNING_MESSAGE);
-//			}
-//
-//		} while (opcion != 4);
-//
-//	}
-//
-//	public void ingresarAnimal() {
-//		registro[cantidadAnimales] = new Mascota();
-//		String nombre = vista.obtenerNombre();
-//		int edad = vista.obtenerEdad(nombre);
-//		String dueño = vista.obtenerDueño();
-//
-//		registro[cantidadAnimales].setDueño(dueño);
-//		registro[cantidadAnimales].setEdad(edad);
-//		registro[cantidadAnimales].setMascota(nombre);
-//
-//		cantidadAnimales++;
-//
-//		vista.imprimirMensaje("Se ha completado el registro");
-//
-//	}
-//
-//	public void buscarAnimal() {
-//		String nombre = vista.obtenerNombre();
-//		for (int i = 0; i <= cantidadAnimales; i++) {
-//			if (registro[i].getMascota().equals(nombre)) {
-//
-//				vista.imprimirMensaje("" + registro[i]);
-//			}
-//
-//		}
-//	}
-//
-	public String directorioVeterinaria() {
-		String datos = "";
-		for (int i = 0; i < cantidadAnimales; i++) {
+  private VentanaPrincipal ventanaPrincipal;
+  private Vista vista;
+  private Mascota registro[];
+  private int cantidadAnimales;
+  ActionListener oyente;
+  private int tamañoArreglo;
 
-			String nombre = registro[i].getMascota();
-			int edad = registro[i].getEdad();
-			String dueño = registro[i].getDueño();
-			datos = datos + "Nombre de tu mascota: " + nombre + "\n\nEdad de tu mascota: " + edad + "\n\nDueño: "
-					+ dueño + "\n\n\n";
-		}
-		return datos;
-	}
-//
-//	public void salir() {
-//		JOptionPane.showConfirmDialog(null, "Esta seguro que desea salir?", "ALERTA!", JOptionPane.YES_NO_OPTION,
-//				JOptionPane.ERROR_MESSAGE);
-	}
+  public Controlador() {
+    ventanaPrincipal = new VentanaPrincipal();
+    vista = new Vista();
+    actionListener(this);
+
+    cantidadAnimales = 0;
+    vista = new Vista();
+  }
+  public void ingresarAnimal(int i) {
+
+    registro[cantidadAnimales] = new Mascota();
+    String nombre = vista.obtenerNombre(i);
+    int edad = vista.obtenerEdad(nombre);
+    String dueño = vista.obtenerDueño(nombre);
+
+    registro[cantidadAnimales].setDueño(dueño);
+    registro[cantidadAnimales].setEdad(edad);
+    registro[cantidadAnimales].setMascota(nombre);
+
+    cantidadAnimales++;
+  }
+
+  public String buscarAnimal() {
+    String nombre = vista.obtenerNombre();
+    String mascota = "";
+    for (int i = 0; i < cantidadAnimales; i++) {
+      if (registro[i].getMascota().equals(nombre)) {
+        mascota = registro[i].toString();
+      }
+    }
+    return mascota;
+  }
+
+  public String directorioVeterinaria() {
+    String datos = "";
+    for (int i = 0; i < cantidadAnimales; i++) {
+
+      String nombre = registro[i].getMascota();
+      int edad = registro[i].getEdad();
+      String dueño = registro[i].getDueño();
+      datos += registro[i].toString() + '\n'+"---------"+'\n';
+    }
+    return datos;
+  }
+
+  public void actionListener(ActionListener escuchador) {
+    ventanaPrincipal.getPanel2().getIngresar().addActionListener(escuchador);
+    ventanaPrincipal.getPanel4().getBuscar().addActionListener(escuchador);
+    ventanaPrincipal.getPanel4().getVerDirectorio().addActionListener(escuchador);
+
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getActionCommand() == "Ingresar") {
+      String aux = ventanaPrincipal.getPanel1().getCantidad().getText();
+      int cantidad = Integer.parseInt(aux);
+      tamañoArreglo = cantidad;
+      registro = new Mascota[tamañoArreglo];
+      for (int i = 0; i < tamañoArreglo; i++) {
+        ingresarAnimal(i);
+      }
+    } else if (e.getActionCommand() == "Ver Directorio") {
+      String datos = directorioVeterinaria();
+      ventanaPrincipal.getPanel3().getResultados().setText(datos);
+    } else if (e.getActionCommand() == "Buscar") {
+      String datos = buscarAnimal();
+      ventanaPrincipal.getPanel3().getResultados().setText(datos);
+    }
+  }
 }

@@ -4,32 +4,20 @@ import javax.swing.JOptionPane;
 
 public class Vista {
 
-  public int menuPrincipal() {
-    int op = 0;
-
-    do {
-      String r = "Seleccione operacion que desea realizar: \n" + "\t1.Registrar Mascota\n"
-        + "\t2.Mostrar Mascota\n" + "\t3.Directorio de la veterinaria\n" +"\t4.Salir"+ "\nOpcion: ";
-      String aux = JOptionPane.showInputDialog(r);
-      op = Integer.parseInt(aux);
-      if (op < 0 || op > 4) {
-        JOptionPane.showMessageDialog(null, "Opcion ingresada es invalida", "MENSAJE DE ERROR",
-          JOptionPane.WARNING_MESSAGE);
-      }
-    } while (op < 0 || op > 4);
-    return op;
+  public String obtenerNombre(int i) {
+    String a = "";
+    a = JOptionPane.showInputDialog("Ingrese nombre de la mascota #" + (i+1));
+    return a;
   }
-
   public String obtenerNombre() {
     String a = "";
-    a = JOptionPane.showInputDialog("Ingrese nombre de la mascota");
+    a = JOptionPane.showInputDialog("Ingrese nombre de la mascota a buscar");
     return a;
-
   }
 
-  public String obtenerDueño() {
+  public String obtenerDueño(String a) {
     String r = "";
-    r = JOptionPane.showInputDialog("Ingrese el nombre del dueño");
+    r = JOptionPane.showInputDialog("Ingrese el nombre del dueño de " + a);
     return r;
   }
 
@@ -40,7 +28,4 @@ public class Vista {
     return r;
   }
 
-  public void imprimirMensaje(String a) {
-    JOptionPane.showMessageDialog(null, a);
-  }
 }

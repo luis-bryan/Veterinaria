@@ -13,4 +13,19 @@ public class Panel4 extends JPanel {
     add(verDirectorio);
   }
 
+  public JButton getBuscar() {
+    return buscar;
+  }
+
+  public void setBuscar(JButton buscar) {
+    this.buscar = buscar;
+  }
+
+  public JButton getVerDirectorio() {
+    return verDirectorio;
+  }
+
+  public void setVerDirectorio(JButton verDirectorio) {
+    this.verDirectorio = verDirectorio;
+  }
 }

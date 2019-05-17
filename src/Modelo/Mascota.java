@@ -39,7 +39,7 @@ public class Mascota {
 
   @Override
   public String toString() {
-    return "Mascota:\n\n" + "Nombre: " + mascota + "\nEdad: " + edad + " años" + "\nDueño: " + dueño;
+    return "Mascota:\n" + "Nombre: " + mascota + "\nEdad: " + edad + " años" + "\nDueño: " + dueño;
   }
 
 }

@@ -8,4 +8,12 @@ public class Panel2 extends JPanel {
     ingresar = new JButton("Ingresar");
     add(ingresar);
   }
+
+  public JButton getIngresar() {
+    return ingresar;
+  }
+
+  public void setIngresar(JButton ingresar) {
+    this.ingresar = ingresar;
+  }
 }
